@@ -8,7 +8,7 @@ const app = express();
 const apiRoutes = require("./routes/api");
 const indexRoutes = require("./routes/index");
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(logger("dev"));
 
@@ -18,9 +18,9 @@ app.use(express.json());
 
 // Serve static content for the app from the "public" directory in the application directory.
 app.use(express.static("public"));
-process.env.MONGODBURL = "mongodb://localhost:27017/workout";
+// process.env.MONGODBURL = "mongodb://localhost:27017/workout";
 
-mongoose.connect(process.env.MONGODBURL, {
+mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useFindAndModify: false,
   useUnifiedTopology: true
