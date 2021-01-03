@@ -14,7 +14,7 @@ A consumer will reach their fitness goals more quickly when they track their wor
 
 When the user loads the page, they should be given the option to create a new workout or continue with their last workout.
 
-The user should be able to:
+The user should be able to:  
 
   * Add exercises to a previous workout plan.
 
