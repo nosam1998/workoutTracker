@@ -6,13 +6,20 @@ const WorkoutSchema = new Schema({
     exercises: [{
         type: String,
         name: String,
-        duration: Number,
-        weight: Number,
-        reps: Number,
-        sets: Number
+        duration: String,
+        weight: String,
+        reps: String,
+        sets: String
     }]
 });
 
+
+//     , { toJSON: { virtuals: true }});
+// WorkoutSchema.virtual("totalDuration").get(function () {
+//     return this.exercises.reduce((total, exercises) => {
+//         return total + exercises.duration;
+//     }, 0);
+// });
 
 // const Workout = mongoose.model("Workout", WorkoutSchema);
 

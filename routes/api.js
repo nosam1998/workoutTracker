@@ -3,49 +3,50 @@ const router = express.Router();
 
 const Workout = require("../models/workout");
 
-router.get("/", (req, res) => {
-    res.json({"name": "mason"})
+router.get("/workouts", (req, res) => {
+  Workout.find({})
+    .sort({ _id: -1 })
+    .limit(1)
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err) => {
+      res.json(err);
+    });
 });
 
-router.get("/workouts", (req, res) => {
-    Workout.find({}, (err, workout_obj) => {
-        console.log(workout_obj)
-        res.json(workout_obj);
+router.post("/workouts/", ({ body }, res) => {
+  Workout.create(body)
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err) => {
+      res.status(400).json(err);
     });
-})
+});
 
-router.post("/workouts", (req, res) => {
-    Workout.create({}, (err, new_workout) => {
-        if (err) return res.sendStatus(500);
-        res.json(new_workout);
+router.put("/workouts/:id", ({ body, params }, res) => {
+  Workout.findOneAndUpdate(
+    { _id: params.id },
+    { $push: { exercises: body } },
+    { new: true }
+  )
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err) => {
+      res.json(err);
     });
-    // workout.findOne({ id: -1 }, (err, workout) => {
-    //     res.json(JSON.parse(workout));
-    // })
-})
-
-router.put("/workouts/:id", (req, res) => {
-    const workoutObj = {
-        date: new Date(),
-        exercises: [req.body]
-    }
-
-    console.log(workoutObj)
-    Workout.findOneAndUpdate({_id: req.params.id}, req.body, (err, doc) => {
-        console.log("Found: \n" + doc);
-        console.log(err);
-        if (err) return res.sendStatus(500);
-        res.json(doc);
-    });
-})
-
+});
 
 router.get("/workouts/range", (req, res) => {
-    Workout.find({}, (err, docs) => {
-        if (err) return res.sendStatus(500);
-        console.log(docs)
-        res.json(docs)
+  Workout.find({})
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err) => {
+      res.json(err);
     });
-})
+});
 
 module.exports = router;
